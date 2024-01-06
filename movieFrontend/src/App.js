@@ -8,6 +8,7 @@ import Header from './components/header/Header';
 import Trailer from './components/trailer/Trailer';
 import Reviews from './components/reviews/Reviews';
 import NotFound from './components/notFound/NotFound';
+import { AuthProvider } from './components/provider/AuthProvider';
 
 function App() {
 
@@ -57,7 +58,9 @@ function App() {
   },[])
 
   return (
+    
     <div className="App">
+      <AuthProvider>
       <Header/>
       <Routes>
           <Route path="/" element={<Layout/>}>
@@ -66,7 +69,8 @@ function App() {
             <Route path="/Reviews/:movieId" element ={<Reviews getMovieData = {getMovieData} movie={movie} reviews ={reviews} setReviews = {setReviews} />}></Route>
             <Route path="*" element = {<NotFound/>}></Route>
           </Route>
-      </Routes>
+        </Routes>
+      </AuthProvider>
 
     </div>
   );

@@ -19,6 +19,9 @@ public class UserService {
         if (emailExists(user.getEmail())) {
             throw new CustomException("Email already in use.");
         }
+        if (userNameExists(user.getUsername())) {
+            throw new CustomException("Username already in use.");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword())); // Hash the password
         user.setCreated(LocalDateTime.now());
         user.setUpdated(LocalDateTime.now());
@@ -28,6 +31,11 @@ public class UserService {
     private boolean emailExists(String email) {
         return userRepository.findByEmail(email).isPresent();
     }
+
+    private boolean userNameExists(String username) {
+        return userRepository.findByUsername(username).isPresent();
+    }
+
 
     public boolean authenticateUser(String username, String password) {
         Optional<User> user = userRepository.findByUsername(username);

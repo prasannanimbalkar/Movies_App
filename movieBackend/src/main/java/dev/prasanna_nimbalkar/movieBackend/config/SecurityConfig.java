@@ -15,13 +15,21 @@ public class SecurityConfig {
                 .csrf().disable() // If you wish to disable CSRF protection
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/api/v1/users/register").permitAll()
+                        .requestMatchers("/api/v1/movies/**").permitAll()
+                        .requestMatchers("/api/v1/**").permitAll()
+                        .requestMatchers("/api/v1/users/login").permitAll()
                         .anyRequest().authenticated()
-
                 )
+//                .formLogin(form -> form
+//                        .loginPage("/api/v1/users/login")
+//                        .permitAll()
+//                )
                 .formLogin(form -> form
-                        .loginPage("/api/v1/users/login")
+//                        .loginPage("/api/v1/users/login") // This is where the login page is, if you have one. If not, this could be causing the problem.
+//                        .loginProcessingUrl("/api/v1/users/login") // This should be where the POST request is sent for login.
                         .permitAll()
                 )
+
                 .logout(logout -> logout
                         .permitAll()
                         );
